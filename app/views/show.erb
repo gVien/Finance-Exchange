@@ -1,0 +1,91 @@
+<header>
+	<div class="logout">
+	  <form action="/logout" method="get">
+	    <input type="submit" value="Logout" class="logout-btn">
+	  </form>
+	</div>
+</header>
+
+<main>
+
+<div class="symbol-box">
+  <form action="/users/<%=@current_user.id%>" method="post">
+    <label for="symbol"></label>
+    <input type="text" name="symbol" id="symbol" placeholder="Enter a Stock Symbol">
+    <label for="symbol"></label>
+    <input type="text" name="period" id="period" placeholder="Enter an (numeric) Interval">
+    <input type="submit" value="Search">
+  </form>
+  <p> Note: if the interval field is left blank, the default value of 30 days will be used.</p>
+</div>
+
+<div class="chart">
+	<!-- if symbole exists, plot the data -->
+
+<img src="<%=@plot_data_img%>" />
+</div>
+
+<% if @comment.length > 0 && @stock %>
+  <div class="comment-box">
+  	<!-- comment box for a specific stock -->
+    <div class="comment-box-form">
+    	 <form action="/users/<%=@current_user.id%>/<%=@sym%>/<%=@period%>" method="post">
+        <label for="comment"></label>
+        <input type="text" name="comment" id="comment" placeholder="Leave a Comment">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+
+
+    <%= erb :_comment, :locals => {post: post}
+  </div>
+<% end #end if %>
+<div class="table-data">
+	<!-- if symbole exists -->
+	<% if @data %>
+	  <table>
+	  	<thead>
+	  		<tr>
+	  			<th class="tbl-title" colspan="6"> Prices for <%=
+          "Symbol = " + @stock.symbol%></th>
+	  		</tr>
+		    <tr class="tbl-header">
+			      <th>Date</th>
+			      <th>Open</th>
+			      <th>High</th>
+			      <th>Low</th>
+			      <th>Close</th>
+			      <th>Volume</th>
+			   </tr>
+			    <% @data.each_with_index do |data, index| %>
+            <% if index.even? %>
+    			   <tr class="tbl-row-even">
+    			   		<td><%= data.date %></td>
+    			      <td><%= data.open.round(3) %></td>
+    			      <td><%= data.high.round(3) %></td>
+    			   		<td><%= data.low.round(3) %></td>
+    			      <td><%= data.close.round(3) %></td>
+    			      <td><%= Stock.separate_comma(data.volume.to_i) %></td>
+    			   </tr>
+            <% else %>
+             <tr class="tbl-row-odd">
+                <td><%= data.date %></td>
+                <td><%= data.open.round(3) %></td>
+                <td><%= data.high.round(3) %></td>
+                <td><%= data.low.round(3) %></td>
+                <td><%= data.close.round(3) %></td>
+                <td><%= Stock.separate_comma(data.volume.to_i) %></td>
+             </tr>
+            <%end #end if%>
+		   <%end #end each%>
+	  </table>
+	<%elsif @data == "not valid"%>
+		<li class="sym-error"> The symbol you entered is not valid. Please pick a valid symbol!</li>
+  <%end #end if%>
+</div>
+
+</main>
+
+<footor>
+	© 2015 - StockOverflow. All rights reserved
+</footor>
