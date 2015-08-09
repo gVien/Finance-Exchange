@@ -1,5 +1,4 @@
-<% @comment.each do |content| %>
-   <% if content.stock_id == @stock.id %>
-      <p class="comment"><%=content.user.first_name + " " + content.user.last_name + ": " + content.comment%> </p>
-   <% end #end if %>
-<% end # end each%>
+<% if content.stock_id == @stock.id %>
+  <p class="comment"><%=content.user.first_name + " " + content.user.last_name + ": " + content.comment%> </p>
+<% end #end if %>
+
