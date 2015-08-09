@@ -119,6 +119,10 @@ https://goo.gl/D1rvqQ for colora*/
   width: 25em;
 }
 
-#login-error {
+#login-error, .sym {
   color: red;
+}
+
+#invalid-sym {
+  color: orange;
 }

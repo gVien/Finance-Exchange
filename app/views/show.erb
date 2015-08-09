@@ -17,6 +17,9 @@
     <input type="submit" value="Search">
   </form>
   <p> Note: if the interval field is left blank, the default value of 30 days will be used.</p>
+   <% if @symbol_error %>
+     <%=@symbol_error%>
+   <% end %>
 </div>
 
 <div class="chart">

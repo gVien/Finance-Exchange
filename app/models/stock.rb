@@ -13,7 +13,8 @@ class Stock < ActiveRecord::Base
 		YahooFinance::get_HistoricalQuotes_days(sym,days) do |day_data|
 			arr_of_hash_data << day_data
 		end
-		arr_of_hash_data.length > 0 ? arr_of_hash_data : "not valid"
+		# arr_of_hash_data.length > 0 ? arr_of_hash_data : "not valid"
+    arr_of_hash_data
 	end
 
 

@@ -19,10 +19,22 @@ end
 post "/users/:user_id" do
 	user = User.find(params[:user_id])
 	if current_user	#is in session
-		login(user)
+		# login(user)
 		params[:period] = 30 if params[:period] == ""
-		Stock.create(symbol: params[:symbol])
-		redirect "/users/#{params[:user_id]}/#{params[:symbol]}/#{params[:period]}"
+
+		# checking for a valid symbol in the field
+		symbol_field = {sym: params[:symbol], period: params[:period]}
+			if Stock.new.data(symbol_field[:sym], symbol_field[:period].to_i).length > 0
+				Stock.create(symbol: symbol_field[:sym])
+				redirect "/users/#{params[:user_id]}/#{params[:symbol]}/#{params[:period]}"
+			else
+				@symbol_error = "<p id=\"invalid-sym\">The symbol <span class=\"sym\">#{symbol_field[:sym]}</span> is not valid. Try a different one, e.g. GOOG, YHOO, APPL, etc.</p>"
+		    @comment = Comment.all
+				@current_user = current_user
+
+				erb :show
+				# redirect "/users/#{user.id}"
+			end	
 	else
 		redirect "/login"
 	end
