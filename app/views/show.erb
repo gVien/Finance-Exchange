@@ -25,7 +25,7 @@
 <img src="<%=@plot_data_img%>" />
 </div>
 
-<% if @comment.length > 0 && @stock %>
+<% if @stock %>
   <div class="comment-box">
   	<!-- comment box for a specific stock -->
     <div class="comment-box-form">
@@ -36,8 +36,10 @@
       </form>
     </div>
 
-
-    <%= erb :_comment, :locals => {post: post}
+    <% @comment.each do |content| %>
+      <%= erb :_comment, :locals => {:content => content}  %> 
+      <% #don't need to pass @stocks as local since it's an instance variable %>
+    <% end # end each%>
   </div>
 <% end #end if %>
 <div class="table-data">

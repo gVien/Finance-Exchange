@@ -118,3 +118,7 @@ https://goo.gl/D1rvqQ for colora*/
 #comment {
   width: 25em;
 }
+
+#login-error {
+  color: red;
+}
