@@ -2,7 +2,7 @@
 
 # get stock symbol information with specific period interval
 get "/users/:user_id/:sym/:period" do
-	if request.xhr?
+	# if request.xhr?
 		@period = params[:period]
 		@current_user = current_user
 		@comment = Comment.all
@@ -10,10 +10,10 @@ get "/users/:user_id/:sym/:period" do
 		@sym = @data.first.symbol.downcase	#why can't I put this in "action" of the form?!?!
 		@stock = Stock.find_by(symbol: params[:sym])
 		@plot_data_img = Stock.plot(@sym, @period.to_i)
-		erb :comment, layout: false, locals: {comment: @comment}
-	else
-		redirect "/users/#{params[:user_id]}/#{params[:sym]}/#{params[:period]}"
-	end
+		erb :show
+	# else
+		# redirect "/users/#{params[:user_id]}/#{params[:sym]}/#{params[:period]}"
+	# end
 end
 
 post "/users/:user_id" do
@@ -30,6 +30,12 @@ end
 
 post "/users/:user_id/:sym/:period" do
 	stock = Stock.find_by(symbol: params[:sym])
-	Comment.create(comment: params[:comment], stock_id: stock.id, user_id: params[:user_id])
-	redirect "/users/#{params[:user_id]}/#{params[:sym]}/#{params[:period]}"
+	comment = Comment.create(comment: params[:comment], stock_id: stock.id, user_id: params[:user_id])
+	user = User.find(comment.user_id)
+
+	if request.xhr?
+		{first_name: user.first_name, last_name: user.last_name, comment: comment.comment}.to_json
+	else
+		redirect "/users/#{params[:user_id]}/#{params[:sym]}/#{params[:period]}"
+	end
 end
