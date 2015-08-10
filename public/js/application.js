@@ -1,12 +1,12 @@
 $(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
-  addComment()
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+
+  
+	// populateProfileWithPages();	//apparenntly calling 2 posts of the same link are too buggy
+	addComment();
 });
 
 
+/****** functions to add comments with Ajax ******/
 var addComment = function() {
   $(".comment-box").on("submit", "#comment-form", function(event) {
   	event.preventDefault();
@@ -14,7 +14,7 @@ var addComment = function() {
 
   	newComment(data);
   	// debugger;
-  	// console.log(data)
+  	console.log(data)
   });
 }
 
@@ -37,3 +37,36 @@ var appendComment = function(responseFromServer) {
 	$("#comment-form")[0].reset();	//or $("#comment").val("") //note that it's in a nodeList
 }
 
+/****** END functions to add comments with Ajax ******/
+
+
+/****** functions to populate Comment Box and Data with Ajax ******/
+
+var populateProfileWithPages = function() {
+	$(".symbol-box").on("submit", "#symbol-form", function(event) {
+		event.preventDefault();
+  	var data = $(this).serialize();
+
+  	// debugger;
+  	console.log(data)
+  	newFormFields(data);
+	})
+}
+
+var newFormFields = function(data) {
+	var submitForm = $("#symbol-form");
+	$.ajax({
+		url: submitForm.attr("action"),
+		method: "post",
+		data: data
+	}).done(function(response) {
+		// debugger;
+		appendProfile(response);
+		console.log("response from field: ", response);
+	})
+}
+
+var appendProfile = function(response) {
+	$("#page-layout-data").html(response);
+}
+/****** END functions to populate Comment Box and Data with Ajax ******/
