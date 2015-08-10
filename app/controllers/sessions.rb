@@ -1,6 +1,10 @@
 # route to login page
 get "/login" do
-	erb :index
+	if current_user
+		redirect "/users/#{session[:user_id]}"
+	else
+		erb :index
+	end
 end
 
 # authenticate login and redirect to user account page
