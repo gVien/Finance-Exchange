@@ -21,6 +21,8 @@ gem 'bcrypt'
 # see transparentech.com/projects/yahoofinance
 gem 'yahoofinance'
 
+gem 'mechanize'
+
 group :test do
   gem 'shoulda-matchers'
   gem 'rack-test'
