@@ -1,0 +1,83 @@
+
+  <% if @stock %>
+  <div id="description-news">
+    <div class="company-description">
+    <% # a div to display the description of companies %>
+    </div>
+
+    <div class="news-headline">
+    <% # a div to display the news of equity %>
+    </div>
+  </div>
+
+
+    <div class="comment-box">
+      <!-- comment box for a specific stock -->
+      <div class="comment-box-form">
+         <form id="comment-form" action="/users/<%=@current_user.id%>/<%=@sym%>/<%=@period%>" method="post">
+          <label for="comment"></label>
+          <input id="comment" type="text" name="comment"  placeholder="Leave a Comment">
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+
+      <% @comment.each do |content| %>
+        <%= erb :_comment, :locals => {:content => content}  %> 
+        <% #don't need to pass @stocks as local since it's an instance variable %>
+      <% end # end each%>
+  </div>
+ 
+
+  <div class="chart">
+  	<!-- if symbole exists, plot the data -->
+
+<!--   <img src="<%=@plot_data_img%>" /> -->
+  </div>
+  <% end #end if %> 
+
+  <div class="table-data">
+  	<!-- if symbole exists -->
+  	<% if @data %>
+  	  <table>
+  	  	<thead>
+  	  		<tr>
+  	  			<th class="tbl-title" colspan="6"> Prices for <%=
+            "Symbol = " + @stock.symbol%></th>
+  	  		</tr>
+  		    <tr class="tbl-header">
+  			      <th>Date</th>
+  			      <th>Open</th>
+  			      <th>High</th>
+  			      <th>Low</th>
+  			      <th>Close</th>
+  			      <th>Volume</th>
+  			   </tr>
+        </thead>
+        <tbody>
+  			    <% @data.each_with_index do |data, index| %>
+              <% if index.even? %>
+      			   <tr class="tbl-row-even">
+      			   		<td><%= data.date %></td>
+      			      <td><%= data.open.round(3) %></td>
+      			      <td><%= data.high.round(3) %></td>
+      			   		<td><%= data.low.round(3) %></td>
+      			      <td><%= data.close.round(3) %></td>
+      			      <td><%= Stock.separate_comma(data.volume.to_i) %></td>
+      			   </tr>
+              <% else %>
+               <tr class="tbl-row-odd">
+                  <td><%= data.date %></td>
+                  <td><%= data.open.round(3) %></td>
+                  <td><%= data.high.round(3) %></td>
+                  <td><%= data.low.round(3) %></td>
+                  <td><%= data.close.round(3) %></td>
+                  <td><%= Stock.separate_comma(data.volume.to_i) %></td>
+               </tr>
+              <%end #end if%>
+  		   <%end #end each%>
+        </tbody>
+  	  </table>
+  	<%elsif @data == "not valid"%>
+  		<li class="sym-error"> The symbol you entered is not valid. Please pick a valid symbol!</li>
+    <%end #end if%>
+  </div>
