@@ -12,4 +12,9 @@ helpers do
 		# if there is in a session
 		@user ||= User.find(session[:user_id]) if session[:user_id]
 	end
+
+	def dataExist?(symbol_field)
+		Stock.new.data(symbol_field[:sym], symbol_field[:period].to_i).length > 0
+	end
+
 end

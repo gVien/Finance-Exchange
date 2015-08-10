@@ -10,7 +10,11 @@ get "/users/:user_id/:sym/:period" do
 		@sym = @data.first.symbol.downcase	#why can't I put this in "action" of the form?!?!
 		@stock = Stock.find_by(symbol: params[:sym])
 		@plot_data_img = Stock.plot(@sym, @period.to_i)
-		erb :show
+		# if request.xhr?
+			# erb :show, layout: false
+		# else
+			erb :show
+		# end
 	# else
 		# redirect "/users/#{params[:user_id]}/#{params[:sym]}/#{params[:period]}"
 	# end
@@ -21,16 +25,21 @@ post "/users/:user_id" do
 	if current_user	#is in session
 		# login(user)
 		params[:period] = 30 if params[:period] == ""
+		@comment = Comment.all
+		@current_user = current_user
+		# @stock = Stock.find_by(symbol: params[:symbol])
+		# @data = Stock.new.data(params[:symbol], params[:period].to_i)
 
 		# checking for a valid symbol in the field
 		symbol_field = {sym: params[:symbol], period: params[:period]}
-			if Stock.new.data(symbol_field[:sym], symbol_field[:period].to_i).length > 0
+			if dataExist?(symbol_field)# && request.xhr?
 				Stock.create(symbol: symbol_field[:sym])
+				erb :_field, layout: false#, locals: {comment: @comment }, layout: false
+				# if 
+				# {comment: @comment, stock: @stock, data: @data }
 				redirect "/users/#{params[:user_id]}/#{params[:symbol]}/#{params[:period]}"
 			else
 				@symbol_error = "<p id=\"invalid-sym\">The symbol <span class=\"sym\">#{symbol_field[:sym]}</span> is not valid. Try a different one, e.g. GOOG, YHOO, APPL, etc.</p>"
-		    @comment = Comment.all
-				@current_user = current_user
 
 				erb :show
 				# redirect "/users/#{user.id}"
