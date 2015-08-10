@@ -34,7 +34,7 @@ post "/users/:user_id" do
 		symbol_field = {sym: params[:symbol], period: params[:period]}
 			if dataExist?(symbol_field)# && request.xhr?
 				Stock.create(symbol: symbol_field[:sym])
-				erb :_field, layout: false#, locals: {comment: @comment }, layout: false
+				# erb :_field, layout: false#, locals: {comment: @comment }, layout: false
 				# if 
 				# {comment: @comment, stock: @stock, data: @data }
 				redirect "/users/#{params[:user_id]}/#{params[:symbol]}/#{params[:period]}"

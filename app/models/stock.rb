@@ -42,7 +42,11 @@ class Stock < ActiveRecord::Base
 
     # 3. Iterate over the number
     num.each_with_index do |substr,index|
-        index%3==0 && index!=0? new_num = new_num+","+substr : new_num = new_num + substr
+        new_num << if index % 3 == 0 && index != 0 
+          ","+substr
+          else
+            substr
+          end
     end
     return new_num.reverse
 end
