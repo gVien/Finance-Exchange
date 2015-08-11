@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
   
-	populateProfileWithPages();	//apparenntly calling 2 posts of the same link are too buggy
+	// populateProfileWithPages();	//apparenntly calling 2 posts of the same link are too buggy
 	addComment();
 });
 
@@ -27,8 +27,8 @@ var newComment = function(data) {
 		data: data,
 		dataType: "json"
 	}).done(function(response) {
-		debugger;
-		// console.log("the response from server: ", response)
+		// debugger;
+		console.log("the response from server: ", response)
 		appendComment(response)
 	});
 }

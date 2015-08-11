@@ -2,17 +2,17 @@
 
 # get stock symbol information with specific period interval
 # get "/stocks/:id"
-get "/users/:user_id/" do
+get "/users/:user_id/:sym/:period" do
 	# if request.xhr?
-		# @period = params[:period]
+		@period = params[:period]
 		@current_user = current_user
 		@comment = Comment.all
-		if params[:sym] && params[:period]
+		# if params[:sym] && params[:period]
 			@data = Stock.new.data(params[:sym], params[:period].to_i)
 			@sym = @data.first.symbol.downcase	#why can't I put this in "action" of the form?!?!
 			@stock = Stock.find_by(symbol: params[:sym])
 			@plot_data_img = Stock.plot(@sym, @period.to_i)
-		end
+		# end
 		# if request.xhr?
 			# erb :show, layout: false
 		# else
@@ -35,12 +35,12 @@ post "/users/:user_id" do
 
 		# checking for a valid symbol in the field
 		symbol_field = {sym: params[:symbol], period: params[:period]}
-			if dataExist?(symbol_field) && request.xhr?
+			if dataExist?(symbol_field) #&& request.xhr?
 				Stock.create(symbol: symbol_field[:sym])
-				erb :_field, layout: false#, locals: {comment: @comment }, layout: false
+				# erb :_field, layout: false#, locals: {comment: @comment }, layout: false
 				# if 
 				# {comment: @comment, stock: @stock, data: @data }
-				# redirect "/users/#{params[:user_id]}/#{params[:symbol]}/#{params[:period]}"
+				redirect "/users/#{params[:user_id]}/#{params[:symbol]}/#{params[:period]}"
 			else
 				@symbol_error = "<p id=\"invalid-sym\">The symbol <span class=\"sym\">#{symbol_field[:sym]}</span> is not valid. Try a different one, e.g. GOOG, YHOO, APPL, etc.</p>"
 
