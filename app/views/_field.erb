@@ -14,7 +14,7 @@
     <div class="comment-box">
       <!-- comment box for a specific stock -->
       <div class="comment-box-form">
-         <form id="comment-form" action="/users/<%=@current_user.id%>/<%=@sym%>/<%=@period%>" method="post">
+         <form id="comment-form" action="/users/<%=@current_user.id%>" method="post">
           <label for="comment"></label>
           <input id="comment" type="text" name="comment"  placeholder="Leave a Comment">
           <input type="submit" value="Submit">

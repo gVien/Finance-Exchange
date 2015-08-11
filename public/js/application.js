@@ -1,14 +1,14 @@
 $(document).ready(function() {
 
   
-	// populateProfileWithPages();	//apparenntly calling 2 posts of the same link are too buggy
+	populateProfileWithPages();	//apparenntly calling 2 posts of the same link are too buggy
 	addComment();
 });
 
 
 /****** functions to add comments with Ajax ******/
 var addComment = function() {
-  $(".comment-box").on("submit", "#comment-form", function(event) {
+  $("#page-layout-data").on("submit", "#comment-form", function(event) {
   	event.preventDefault();
   	var data = $(this).serialize();
 
@@ -19,22 +19,23 @@ var addComment = function() {
 }
 
 var newComment = function(data) {
-	var form = $("#comment-form");
+	var form = $("#page-layout-data").find("#comment-form");
+	// debugger
 	$.ajax({
 		url: form.attr("action"),
 		method: form.attr("method"),
 		data: data,
 		dataType: "json"
 	}).done(function(response) {
-		// debugger;
+		debugger;
 		// console.log("the response from server: ", response)
 		appendComment(response)
 	});
 }
 
 var appendComment = function(responseFromServer) {
-	$(".comment-box").append("<p>"+responseFromServer.first_name + " " + responseFromServer.last_name + ": " + responseFromServer.comment + "</p>");
-	$("#comment-form")[0].reset();	//or $("#comment").val("") //note that it's in a nodeList
+	$("#page-layout-data").find(".comment-box").append("<p>"+responseFromServer.first_name + " " + responseFromServer.last_name + ": " + responseFromServer.comment + "</p>");
+	// $("#page-layout-data").("#comment-form")[0].reset();	//or $("#comment").val("") //note that it's in a nodeList
 }
 
 /****** END functions to add comments with Ajax ******/
