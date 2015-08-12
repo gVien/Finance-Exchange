@@ -22,5 +22,5 @@ end
 post "/signup" do
 	@new_user = User.create(params[:user])
 	login(@new_user)
-	redirect "/users/#{@new_user.id}"
+	redirect "/stocks"
 end

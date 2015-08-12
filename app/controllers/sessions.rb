@@ -1,9 +1,9 @@
 # route to login page
 get "/login" do
 	if current_user
-		redirect "/users/#{session[:user_id]}"
+		redirect "/stocks"
 	else
-		erb :index
+		erb :login
 	end
 end
 
@@ -13,10 +13,10 @@ post "/login" do
 	p "The login user is #{user}"
 	if user && user.authenticate(params[:password])
 		login(user)
-		redirect "/users/#{user.id}"
+		redirect "/stocks"
 	else
 		@error = "You have entered the wrong email or password! Please try again!"
-		erb :index
+		erb :login
 	end
 end
 

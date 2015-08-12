@@ -120,6 +120,3 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   yahoofinance
-
-BUNDLED WITH
-   1.10.6
