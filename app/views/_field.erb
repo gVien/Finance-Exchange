@@ -1,5 +1,5 @@
 
-  <% if @stock %>
+<% if @stock %>
   <div id="description-news">
     <div class="company-description">
     <% # a div to display the description of companies %>
@@ -14,7 +14,7 @@
     <div class="comment-box">
       <!-- comment box for a specific stock -->
       <div class="comment-box-form">
-         <form id="comment-form" action="/users/<%=@current_user.id%>/<%=@sym%>/<%=@period%>" method="post">
+         <form id="comment-form" action="/stocks/<%=@stock.symbol%>/period/<%=params[:period]%>" method="post">
           <label for="comment"></label>
           <input id="comment" type="text" name="comment"  placeholder="Leave a Comment">
           <input type="submit" value="Submit">
@@ -22,18 +22,18 @@
       </div>
 
       <% @comment.each do |content| %>
-        <%= erb :_comment, :locals => {:content => content}  %> 
+        <%= erb :_comment, :locals => {:content => content}  %>
         <% #don't need to pass @stocks as local since it's an instance variable %>
-      <% end # eachnd each%>
+      <% end # each each%>
   </div>
- 
+
 
   <div class="chart">
-  	<!-- if symbole exists, plot the data -->
+  	<!-- if symbole exists, plot the data
 
 <!--   <img src="<%=@plot_data_img%>" /> -->
   </div>
-  <% end #end if %> 
+
 
   <div class="table-data">
   	<!-- if symbole exists -->
@@ -81,3 +81,4 @@
   		<li class="sym-error"> The symbol you entered is not valid. Please pick a valid symbol!</li>
     <%end #end if%>
   </div>
+<% end #end if %> -->

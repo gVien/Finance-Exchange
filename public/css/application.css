@@ -5,18 +5,18 @@ html, body, h1, h2, h3, p, ol, ul, li, a {
 	margin: 0;
 }
 
-.main-page {
+/*.main-page {
   width: 100%;
   height: 100%;
 	background: gray url("../international-finance-centre.jpg") top left no-repeat;
-}
+}*/
 
 main {
   margin-left: 10px;
 }
 
 .login-signup {
-  margin: 20% auto 50% auto;
+  margin: 15% auto 15% auto;
   width: 25%;
   height: 100%;
   padding: 0px 20px 20px 20px;
@@ -63,7 +63,7 @@ main {
 	padding: .3em 0 .3em 0;
 }
 
-header {
+header {git
 	width: 100%;
 	height: 2em;
 	border-bottom: 1px solid #F6F6F6;
@@ -102,15 +102,19 @@ https://goo.gl/D1rvqQ for colora*/
 
 .symbol-box {
   /*display: inline-block;*/
+  margin: 0 auto;
+  max-width: 600px;
   margin-bottom: 1em;
-  float: left;
+  padding-top: 64px;
+  /*float: left;*/
 }
-
 
 #page-layout-data {
   width: 100%;
   float: left;
   /*clear: both;*/
+  /*position: relative;*/
+
 }
 
 .comment-box-form {
@@ -184,6 +188,7 @@ https://goo.gl/D1rvqQ for colora*/
 
 footer {
   text-align: center;
+  position: absolute;
   width: 100%;
   height: 2em;
   bottom: 0;
