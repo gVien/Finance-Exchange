@@ -1,9 +1,4 @@
 class YahooFinanceDataCollector
-  # attr_access :days
-
-  # def initialize(days)
-  #   @days = days
-  # end
 
   def self.get_price_data(stock_symbol, days)
     self.new.get_price_data(stock_symbol, days)
@@ -41,21 +36,33 @@ class YahooFinanceDataCollector
     parse_yahoo_finance(sym).search("#yfi_headlines .bd li").map {|data| data}
   end
 
-  def self.get_yahoo_finance_news_anchor_for(sym)
+  def self.news_data_for(sym)
     news_source_arr = []
     get_yahoo_finance_news_for(sym).each_with_index do |li, i|
-      p li#[i].search("a").first
-      # news_source_arr << [anchor["href"], anchor.inner_text]
+      anchor_element = li.search("a").first
+      # http://stackoverflow.com/questions/10799136/get-text-directly-inside-a-tag-in-nokogiri
+      publisher = li.search("cite").xpath("text()").first.inner_text  #xpath gets the element text only, ignores other tag inside it
+      published_date = li.search("cite > span").inner_text
+      news_source_arr << {title: anchor_element.inner_text, href: anchor_element["href"], publisher: publisher, published_date: published_date}
     end
     news_source_arr
   end
 
-  def self.get_yahoo_finance_news
-  end
-
-  def self.complete_news_url(sym)
-  end
+  # def self.complete_news_url(sym)
+  #   complete_url_arr = []
+  #   news_data_for(sym).each do |anchor_element|
+  #     complete_url_arr << "<a> href='#{anchor_}
+  # end
 
   def self.parseGoogleFinance(sym)
   end
 end
+
+# pp q = YahooFinanceDataCollector.get_price_data("GOOG", 15)
+# p q.first.symbol.kind_of? String
+# p Stock.plot("NEW",45)
+# require "mechanize"
+# g =YahooFinanceDataCollector.news_data_for("goog")
+# g.each do |title|
+# p title[:title]
+# end

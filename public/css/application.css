@@ -139,8 +139,8 @@ https://goo.gl/D1rvqQ for colora*/
 }
 
 #description-news {
-  width: 25%;
-  height: 40em;
+  width: 30%;
+  height: 100%;
   border: 1px solid orange;
   /*display: inline-block;*/
   float: left;
@@ -160,6 +160,25 @@ https://goo.gl/D1rvqQ for colora*/
   margin-top: 10px;
   /*display: inline;*/
   /*float: right;*/
+}
+
+.news {
+  margin: 5px;
+  font-size: 77%;
+  color: #8fa1b0;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.publisher {
+  color: #999;
+  font-weight: bold;
+}
+
+.published_date {
+  color: #999;
 }
 
 .chart {
@@ -198,3 +217,5 @@ footer {
   padding-top: 1em;
   clear: both;
 }
+
+

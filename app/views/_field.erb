@@ -7,6 +7,11 @@
 
     <div class="news-headline">
     <% # a div to display the news of equity %>
+    <h3>Headlines</h3>
+      <% @news.each do |anchor_element| %>
+        <li class="news"><a href="<%= anchor_element[:href] %>" class="link" target=_><%= anchor_element[:title] %></a>
+          <span class="publisher"><%=anchor_element[:publisher]%></span> <span class="published_date"><%=anchor_element[:published_date] %></span></li>
+      <% end %>
     </div>
   </div>
 
