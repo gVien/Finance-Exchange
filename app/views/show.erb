@@ -1,0 +1,39 @@
+<div class="container">
+<header>
+	<div class="logout">
+	  <form action="/logout" method="get">
+	    <input type="submit" value="Logout" class="logout-btn">
+	  </form>
+	</div>
+
+  <div class="account">
+    <form action="/account" method="get">
+      <input type="submit" value="account" class="account-btn">
+    </form>
+  </div>
+</header>
+
+<main>
+
+<div class="symbol-box">
+  <form id="stocks-form" action="/stocks" method="post">
+    <label for="symbol"></label>
+    <input type="text" name="symbol" id="symbol" placeholder="Enter a Stock Symbol">
+    <label for="symbol"></label>
+    <input type="text" name="period" id="period" placeholder="Enter an (numeric) Interval">
+    <input type="submit" value="Search">
+  </form>
+  <p> Note: if the interval field is left blank, the default value of 30 days will be used.</p>
+
+</div>
+
+<div id="page-layout-data">
+  <%=erb :_field %>
+</div>
+
+</main>
+
+<!-- <footer>
+	&copy; 2015 - StockOverflow. All rights reserved
+</footer> -->
+</div>

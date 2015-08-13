@@ -1,0 +1,29 @@
+<div class="main-page">
+
+	<div class="quote">
+		<!-- add Warren Buffet quote here -->
+	</div>
+
+
+	<div class="login-signup">
+		<p class="welcome">Welcome!, please login or signup to continue!</p>
+		<div class="login-form">
+		  <form action="/login" method="post">
+		    <label for="email"></label>
+		    <input type="text" name="email" id="login-email" placeholder="Enter Your Email">
+		    <label for="password"></label>
+		    <input type="password" name="password" id="login-password" placeholder="Enter Your Password">
+		    <input id="login-btn" type="submit" value="Login">
+		  </form>
+		 <% if @error %>
+			<p id="login-error"> <%=@error%></p>
+		 <% end %>
+		<p class="no-acct"> Don't have an account?</p>
+		</div>
+		<div class="signup-btn">
+		<form action="/signup" method="GET">
+			<input id="signup-btn" type="submit" value="Signup"> it's free!
+		</form>
+		</div>
+	</div>
+</div>
