@@ -14,13 +14,13 @@ helpers do
 	end
 
 	def dataExist?(symbol_field)
-		YahooFinanceDataCollector.run(symbol_field[:sym], symbol_field[:period].to_i).length > 0
+		YahooFinanceDataCollector.get_price_data(symbol_field[:sym], symbol_field[:period].to_i).length > 0
 	end
 
 	def render_page_with_stock_info(symbol_field)
 		if dataExist?(symbol_field) && request.xhr?
 			@comment = Comment.all
-			@data = YahooFinanceDataCollector.run(symbol_field[:sym], symbol_field[:period].to_i)
+			@data = YahooFinanceDataCollector.get_price_data(symbol_field[:sym], symbol_field[:period].to_i)
 			@stock = Stock.find_or_create_by(symbol: symbol_field[:sym])
 			erb :_field, layout: false
 		elsif !dataExist?(symbol_field) && request.xhr?
