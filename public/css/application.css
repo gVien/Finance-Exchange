@@ -208,8 +208,8 @@ https://goo.gl/D1rvqQ for colora*/
 }
 
 .chart {
-  width: 25%;
-  height: 40em;
+  width: 500px;
+  height: 400px;
   border: 1px solid black;
   /*padding-left: 50px;*/
   float: left;
