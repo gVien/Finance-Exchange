@@ -23,7 +23,9 @@ helpers do
 			@data = YahooFinanceDataCollector.get_price_data(symbol_field[:sym], symbol_field[:period].to_i)
 			@stock = Stock.find_or_create_by(symbol: symbol_field[:sym])
 			company_news_and_profile
-			erb :_field, layout: false
+			@page_content = erb(:_field, layout: false)
+			content_type :json
+			{page_content: @page_content, data: @data}.to_json
 		elsif !dataExist?(symbol_field) && request.xhr?
 			@symbol_error = "<p id=\"invalid-sym\">The symbol <span class=\"sym\">#{symbol_field[:sym]}</span> is not valid. Try a different one, e.g. GOOG, YHOO, AAPL, etc.</p>"
 			# erb :"_invalid-symbol", layouot: false	#no need for this, since it adds it in the body for no reasons
