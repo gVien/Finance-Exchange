@@ -17,7 +17,7 @@ class YahooFinanceDataCollector
   end
 
 
-  def self.parse_yahoo_finance(sym)
+  def self.parse_yahoo_finance_price_data(sym)
     mechanize = Mechanize.new
     url = "http://finance.yahoo.com/q?s=" + sym
     page = mechanize.get(url)
@@ -33,7 +33,7 @@ class YahooFinanceDataCollector
 
   # The complete .inner_text of `get_yahoo_finance_news_for(sym)` returns title, source, and date
   def self.get_yahoo_finance_news_for(sym)
-    parse_yahoo_finance(sym).search("#yfi_headlines .bd li").map {|data| data}
+    parse_yahoo_finance_price_data(sym).search("#yfi_headlines .bd li").map {|data| data}
   end
 
   def self.news_data_for(sym)
@@ -48,21 +48,18 @@ class YahooFinanceDataCollector
     news_source_arr
   end
 
-  # def self.complete_news_url(sym)
-  #   complete_url_arr = []
-  #   news_data_for(sym).each do |anchor_element|
-  #     complete_url_arr << "<a> href='#{anchor_}
-  # end
-
-  def self.parseGoogleFinance(sym)
+  def self.company_name(sym)
+    parse_yahoo_finance_price_data(sym).search(".title h2").inner_text
   end
+
 end
 
 # pp q = YahooFinanceDataCollector.get_price_data("GOOG", 15)
 # p q.first.symbol.kind_of? String
 # p Stock.plot("NEW",45)
 # require "mechanize"
-# g =YahooFinanceDataCollector.news_data_for("goog")
+# p g = YahooFinanceDataCollector.company_name("goog")
 # g.each do |title|
 # p title[:title]
 # end
+
