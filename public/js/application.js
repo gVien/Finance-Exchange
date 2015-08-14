@@ -70,7 +70,7 @@ var renderProfilePage = function(data) {
     $(".ajax-loader").hide();
 		appendProfilePage(response);
 		appendStockChart(response.data)
-		console.log("response from field: ", response.data);
+		console.log("response from field: ", response);
 		// console.log(formatPrice(response.data))
 	})
 }
@@ -89,7 +89,7 @@ var appendProfilePage = function(response) {
 var appendStockChart = function (data) { 
             // set the allowed units for data grouping
            var groupingUnits = [[
-                'week',                         // unit name
+                'day',                         // unit name
                 [1]                             // allowed multiples
             ], [
                 'month',
@@ -112,7 +112,7 @@ var appendStockChart = function (data) {
                     x: -3
                 },
                 title: {
-                    text: 'OHLC'
+                    text: 'Price'
                 },
                 height: '60%',
                 lineWidth: 2
