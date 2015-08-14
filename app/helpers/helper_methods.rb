@@ -25,7 +25,7 @@ helpers do
 			company_news_and_profile
 			erb :_field, layout: false
 		elsif !dataExist?(symbol_field) && request.xhr?
-			@symbol_error = "<p id=\"invalid-sym\">The symbol <span class=\"sym\">#{symbol_field[:sym]}</span> is not valid. Try a different one, e.g. GOOG, YHOO, APPL, etc.</p>"
+			@symbol_error = "<p id=\"invalid-sym\">The symbol <span class=\"sym\">#{symbol_field[:sym]}</span> is not valid. Try a different one, e.g. GOOG, YHOO, AAPL, etc.</p>"
 			# erb :"_invalid-symbol", layouot: false	#no need for this, since it adds it in the body for no reasons
 			content_type :json
 			{symbol_error: @symbol_error}.to_json
