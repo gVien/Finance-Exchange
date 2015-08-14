@@ -19,7 +19,7 @@ class YahooFinanceDataCollector
 
   def self.parse_yahoo_finance_price_data(sym)
     mechanize = Mechanize.new
-    url = "http://finance.yahoo.com/q?s=" + sym
+    url = "http://finance.yahoo.com/q?s=" + sym.to_s
     page = mechanize.get(url)
   end
 

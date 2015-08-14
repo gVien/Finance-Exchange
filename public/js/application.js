@@ -59,11 +59,16 @@ var renderProfilePage = function(data) {
 	$.ajax({
 		url: submitForm.attr("action"),
 		method: "post",
-		data: data
+		data: data,
+    beforeSend: function() {
+      $(".display-page").hide()
+      $(".ajax-loader").show();
+    }
 	}).done(function(response) {
 		// debugger;
+    $(".ajax-loader").hide();
 		appendProfilePage(response);
-		console.log("response from field: ", response);
+		// console.log("response from field: ", response);
 	})
 }
 

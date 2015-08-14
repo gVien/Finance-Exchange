@@ -244,4 +244,12 @@ footer {
   clear: both;
 }
 
+.ajax-loader {
+  display: none;
+  text-align: center;
+  margin-top: 7%;
+  height: 100%;
+  width: 100%;
+}
+
 

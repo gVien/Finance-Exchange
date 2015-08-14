@@ -22,6 +22,7 @@ helpers do
 			@comment = Comment.all
 			@data = YahooFinanceDataCollector.get_price_data(symbol_field[:sym], symbol_field[:period].to_i)
 			@stock = Stock.find_or_create_by(symbol: symbol_field[:sym])
+			company_news_and_profile
 			erb :_field, layout: false
 		elsif !dataExist?(symbol_field) && request.xhr?
 			@symbol_error = "<p id=\"invalid-sym\">The symbol <span class=\"sym\">#{symbol_field[:sym]}</span> is not valid. Try a different one, e.g. GOOG, YHOO, APPL, etc.</p>"
@@ -29,7 +30,7 @@ helpers do
 			content_type :json
 			{symbol_error: @symbol_error}.to_json
 		else
-			redirect "/stocks/#{symbol_field[:sym]}/period/#{symbol_field[:period]}"	#/users/#{params[:user_id]}/#{params[:symbol]}/#{params[:period]}"
+			redirect "/stocks/#{params[:symbol]}/period/#{params[:period]}"	#/users/#{params[:user_id]}/#{params[:symbol]}/#{params[:period]}"
 		end
 	end
 
