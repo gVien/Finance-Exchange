@@ -13,7 +13,12 @@ class GoogleFinanceDataCollector
     address = profile.search(".sfe-section")[3].inner_text.gsub("- Map"," ")
 
     map_href_checker = profile.search(".sfe-section")[3].search("a")
-    map_href = map_href_checker.first["href"] if map_href_checker.length > 0  #not all company have map on GoogleFinance...
+    if map_href_checker.length > 0  #not all company have map on GoogleFinance...
+        map_href = map_href_checker.first["href"]
+        map = "<a href='#{map_href}' target=_>Map</a>"
+    else
+        map = "N/A"
+    end
 
     sector = profile.search("#sector").inner_text
     industry = profile.search(".g-first a").last.inner_text
@@ -24,8 +29,8 @@ class GoogleFinanceDataCollector
                      industry: industry,
                      description: description,
                      address: address,
-                     map: "<a href='#{map_href}' target=_>map</a>",
-                     website: "<a href='#{website}' target=_>website</a>",
+                     map: map,
+                     website: "<a href='#{website}' target=_>Website</a>",
                      :"number of employees" => number_of_employees }
   end
 
