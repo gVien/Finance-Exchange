@@ -32,4 +32,9 @@ helpers do
 			redirect "/stocks/#{symbol_field[:sym]}/period/#{symbol_field[:period]}"	#/users/#{params[:user_id]}/#{params[:symbol]}/#{params[:period]}"
 		end
 	end
+
+	def company_news_and_profile
+		@news = YahooFinanceDataCollector.news_data_for(params[:symbol])
+		@company_profile = GoogleFinanceDataCollector.create_company_profile(params[:symbol])
+	end
 end

@@ -3,11 +3,26 @@
   <div id="description-news">
     <div class="company-description">
     <% # a div to display the description of companies %>
+      <table>
+        <thead>
+          <tr>
+            <th class="news-title" colspan="2"> Company Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @company_profile.each do |detail, profile|%>
+          <tr>
+            <td class="company-detail"><%= detail.capitalize %></td>
+            <td class="company-profile"><%= profile %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
     <div class="news-headline">
     <% # a div to display the news of equity %>
-    <h3>Headlines</h3>
+    <h3 class="headline">Headlines</h3>
       <% @news.each do |anchor_element| %>
         <li class="news"><a href="<%= anchor_element[:href] %>" class="link" target=_><%= anchor_element[:title] %></a>
           <span class="publisher"><%=anchor_element[:publisher]%></span> <span class="published_date"><%=anchor_element[:published_date] %></span></li>

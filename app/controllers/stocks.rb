@@ -14,7 +14,8 @@ get "/stocks/:sym/period/:period" do 	# "/users/:user_id/:sym/:period"
 		@comment = Comment.all
 		@data = YahooFinanceDataCollector.get_price_data(params[:sym], params[:period].to_i)
 		@sym = @data.first.symbol.downcase	#why can't I put this in "action" of the form?!?!
-		@stock = Stock.find_by(symbol: params[:sym])
+		@stock = Stock.find_by(symbol: params[:symbol])
+		company_news_and_profile
 
 		erb :show
 end
@@ -22,8 +23,8 @@ end
 post "/stocks" do
 	if current_user
 		params[:period] = 30 if params[:period] == ""
-		@news = YahooFinanceDataCollector.news_data_for(params[:symbol])
-		p @news
+		company_news_and_profile
+
 		# checking for a valid symbol in the field
 		symbol_field = {sym: params[:symbol].upcase, period: params[:period]}
 		render_page_with_stock_info(symbol_field)
