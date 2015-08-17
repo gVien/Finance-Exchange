@@ -28,7 +28,7 @@ var newComment = function(data) {
 		dataType: "json"
 	}).done(function(response) {
 		// debugger;
-		console.log("the response from server: ", response)
+		// console.log("the response from server: ", response)
 		appendComment(response)
 	});
 }
@@ -62,16 +62,14 @@ var renderProfilePage = function(data) {
 		data: data,
 		dataType: "JSON",
     beforeSend: function() {
-      $(".display-page").hide()
-      $(".ajax-loader").show();
+      // $(".display-page").hide();
+      appendAjaxLoader();
     }
 	}).done(function(response) {
-		// debugger;
-    $(".ajax-loader").hide();
+        $(".ajax-loader").remove();
 		appendProfilePage(response);
 		appendStockChart(response.data)
-		console.log("response from field: ", response);
-		// console.log(formatPrice(response.data))
+		// console.log("response from field: ", response);
 	})
 }
 
@@ -82,6 +80,12 @@ var appendProfilePage = function(response) {
   $("#stocks-form")[0].reset();
 }
 /****** END functions to populate Comment Box and Data with Ajax ******/
+
+// Append Ajax loader
+
+var appendAjaxLoader = function() {
+    $("#page-layout-data").prepend("<div class='ajax-loader'><img src='/ajax-loader.gif'></div>")
+}
 
 
 /* HIGH CHARTS CODES ARE BELOW */
