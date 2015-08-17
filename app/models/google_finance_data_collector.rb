@@ -6,36 +6,97 @@ class GoogleFinanceDataCollector
     page = mechanize.get(url)
   end
 
-  def self.create_company_profile(sym)
-    profile = parse_company_info_at_google_finance_for(sym)
-    name = YahooFinanceDataCollector.company_name(sym)  # it was hard to extract the name at Google Finance...
-    description = profile.search(".companySummary").inner_text
-    address = profile.search(".sfe-section")[3].inner_text.gsub("- Map"," ")
+  def self.data_exist?(property)
+    property.length > 0     # check if the property (such as description, name, etc) exists, if it does not, returns an empty array
+  end
 
-    map_href_checker = profile.search(".sfe-section")[3].search("a")
-    if map_href_checker.length > 0  #not all company have map on GoogleFinance...
-        map_href = map_href_checker.first["href"]
-        map = "<a href='#{map_href}' target=_>Map</a>"
+  def self.profile(sym)
+    parse_company_info_at_google_finance_for(sym)
+  end
+
+  def self.name(sym)
+    YahooFinanceDataCollector.company_name(sym)  # it was hard to extract the name at Google Finance...
+  end
+
+  def self.description(sym)
+    description = profile(sym).search(".companySummary")
+    if data_exist?(description)
+      description.inner_text
     else
-        map = "N/A"
-    end
+      "N/A"
+    end  
+  end
 
-    sector = profile.search("#sector").inner_text
-    industry = profile.search(".g-first a").last.inner_text
-    website = profile.search("#fs-chome").inner_text.gsub("\n","")
-    number_of_employees = profile.search(".period")[10].inner_text.gsub("\n","")
-    profile_hash = { name: name,
-                     sector: sector,
-                     industry: industry,
-                     description: description,
-                     address: address,
-                     map: map,
-                     website: "<a href='#{website}' target=_>Website</a>",
-                     :"number of employees" => number_of_employees }
+  def self.sector(sym)
+    sector = profile(sym).search("#sector")
+    if data_exist?(sector)
+      sector.inner_text
+    else
+      "N/A"
+    end
+  end
+
+  def self.industry(sym)
+    industry = profile(sym).search(".g-first a")
+    if data_exist?(industry)
+      industry.last.inner_text
+    else
+        "N/A"
+    end
+  end
+
+  def self.address(sym)
+    address = profile(sym).search(".sfe-section")[3]
+    if address
+      address.inner_text.gsub("- Map"," ")
+    else
+      "N/A"
+    end
+  end
+
+  def self.map(sym)
+    map_href = profile(sym).search(".sfe-section")[3]
+    if map_href  #not all company have map on GoogleFinance...
+        return "N/A" if map_href.search("a").empty? #format of Google Finance is not consistant for international stocks
+        map_href = map_href.search("a").first["href"]
+        "<a href='#{map_href}' target=_>Map</a>"
+    else
+        "N/A"
+    end
+  end
+
+  def self.website(sym)
+    website = profile(sym).search("#fs-chome")
+    if data_exist?(website)
+        url = website.inner_text.gsub("\n","")
+        "<a href='#{url}' target=_>Website</a>"
+    else
+        "N/A"
+    end
+  end
+
+  def self.number_of_employees(sym)
+    number_of_employees = profile(sym).search(".period")[10]
+    if number_of_employees
+        number_of_employees.inner_text.gsub("\n","")
+    else
+        "N/A"
+    end
+  end
+
+  def self.create_company_profile(sym)
+    { name: name(sym),
+     sector: sector(sym),
+     industry: industry(sym),
+     description: description(sym),
+     address: address(sym),
+     map: map(sym),
+     website: website(sym),
+     :"number of employees" => number_of_employees(sym) }
   end
 
 end
 
 
 # require "mechanize"
-# p j = GoogleFinanceDataCollector.create_company_profile("blue")
+# p j = GoogleFinanceDataCollector.map("uvxy")
