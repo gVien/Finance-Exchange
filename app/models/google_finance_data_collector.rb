@@ -1,5 +1,4 @@
 class GoogleFinanceDataCollector
-
   def self.parse_company_info_at_google_finance_for(sym)
     mechanize = Mechanize.new
     url = "https://www.google.com/finance?q=" + sym
