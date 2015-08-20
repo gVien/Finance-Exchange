@@ -27,9 +27,4 @@ class Stock < ActiveRecord::Base
 
 end
 
-# stock = Stock.new
-# pp q = stock.data("GOOG", 15)
-# p q.first.symbol.kind_of? String
-# p Stock.plot("NEW",45)
-# require "mechanize"
-# p Stock.get_yahoo_finance_news_for("goog")
+
